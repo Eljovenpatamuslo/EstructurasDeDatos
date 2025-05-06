@@ -1,0 +1,8 @@
+ Glist glist_filtrarR2(GList list, predicado p, funcion copia copy){
+    if(glist_vacia(list)) return glist_crear();
+    Glist filtrada = glist_filtrarR2(list->next,p,copy);
+
+    if(p(list->data))
+    filtrada = glist_agregar_inicio(filtrada,list->data,copy);
+    return filtrada;
+}

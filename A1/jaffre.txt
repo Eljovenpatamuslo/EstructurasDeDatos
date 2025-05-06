@@ -1,0 +1,15 @@
+1-lo que dijo jaffre
+
+los naturales tienen un maximo
+por absurdo
+
+procedemos por induccion sobre el largo del array (n)
+
+    * n = 1,  0 es pico
+    * paso inductivo, (HI si a es un arreglo de tamaño n, a tiene pico)
+        si a[0] > a[1], 0 es pico
+        si no, por HI a[1:n] tiene pico
+
+
+7)
+F * (C-1)
