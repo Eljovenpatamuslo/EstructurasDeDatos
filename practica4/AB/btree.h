@@ -58,4 +58,6 @@ int btree_profundidad(BTree arbol, int dato);
 int btree_sumar(BTree arbol);
 
 void btree_recorrer_extra(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisitanteExtra visit, void *extra);
+
+void btree_recorrer_bfs(BTree arbol, FuncionVisitante visit);
 #endif /* __BTREE_H__ */

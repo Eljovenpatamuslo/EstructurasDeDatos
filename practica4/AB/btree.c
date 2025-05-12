@@ -158,21 +158,21 @@ void btree_recorrer_extra(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisita
   switch (orden)
   {
   case BTREE_RECORRIDO_IN:
-    btree_recorrer(arbol->left,orden,visit);
-    btree_recorrer(arbol->right,orden,visit);
+    btree_recorrer_extra(arbol->left,orden,visit,extra);
+    btree_recorrer_extra(arbol->right,orden,visit,extra);
     visit(arbol->dato,extra);
     break;
 
   case BTREE_RECORRIDO_PRE:
     visit(arbol->dato,extra);
-    btree_recorrer(arbol->left,orden,visit);
-    btree_recorrer(arbol->right,orden,visit);
+    btree_recorrer_extra(arbol->left,orden,visit,extra);
+    btree_recorrer_extra(arbol->right,orden,visit,extra);
     break;
     
   case BTREE_RECORRIDO_POST:
-    btree_recorrer(arbol->right,orden,visit);
+    btree_recorrer_extra(arbol->right,orden,visit,extra);
     visit(arbol->dato,extra);
-    btree_recorrer(arbol->left,orden,visit);
+    btree_recorrer_extra(arbol->left,orden,visit,extra);
     break;
     
   default:
@@ -182,3 +182,10 @@ void btree_recorrer_extra(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisita
 }
 //Piense cu´ales de las funciones del ejercicio anterior se podr´ıan definir de manera compacta llamando
 //a btree recorrer extra con un orden, una funci´on visitante y un dato extra apropiados
+
+void btree_recorrer_bfs(BTree arbol, FuncionVisitante visit){
+  if(arbol == NULL) return;
+  visit(arbol->dato);
+  return btree_busqueda_por_extension(arbol->left,visit);
+  return btree_busqueda_por_extension(arbol->right,visit);
+}

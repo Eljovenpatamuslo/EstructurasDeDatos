@@ -1,0 +1,14 @@
+    10
+      20
+    15  25
+      16  39
+        18
+           19
+
+Eliminando el 20 del arbol anterior
+    10
+       25
+    15    39
+      16    
+        18
+          19
