@@ -80,28 +80,44 @@ void btree_recorrer(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisitante vi
 void* copiar_arbol(void* dato){
   return dato;
 }
-/* mal
-void btree_recorrerPRE_iter(BTree arbol,FuncionVisitante visit) {
-  Pila pila = pila_crear();
-  for(BTree aux = arbol;(aux->right != NULL && aux->left != NULL) || !pila_es_vacia(pila);){
-    printf("hi");
-    visit(&aux->dato);
-    if(aux->right != NULL) pila = pila_apilar(pila,aux->right,copiar_arbol);
 
-    if(aux->left != NULL){
-      aux = aux->left;
-    }else{
-      aux = (BTree)pila_tope(pila);
-      pila_imprimir(pila,visit);
-      printf("%i",pila_es_vacia(pila));
+void* no_copia (void* dato){
+  return dato;
+}
 
-      if(!pila_es_vacia(pila)) pila_desapilar(pila,(FuncionDestructora) btree_destruir);
+void no_destruir (void* dato){
+  return;
+}
+
+/*
+void btree_recorrer_pre_it(BTree arbol, FuncionVisitante visit) {
+  if (btree_empty(arbol))
+    return;
+
+  Pila pila_de_nodos = pila_crear();
+
+  pila_de_nodos = pila_apilar(pila_de_nodos, arbol, no_copia);
+
+  while(!pila_es_vacia(pila_de_nodos)) {
+    printf("Printeo casi");
+    BTree nodo_actual = pila_tope(pila_de_nodos);
+    visit(&nodo_actual->dato);
+    printf("Pintie");
+
+    pila_desapilar(pila_de_nodos, no_destruir);
+    printf("Desapile");
+
+    if (!btree_empty(nodo_actual->right)){
+      pila_de_nodos = pila_apilar(pila_de_nodos, nodo_actual->right, no_copia);
+      printf("Hay a la derecha");
     }
+    if (!btree_empty(nodo_actual->left))
+      pila_de_nodos = pila_apilar(pila_de_nodos, nodo_actual->left, no_copia);
   }
-
-  free(pila);
+  pila_destruir(pila_de_nodos, no_destruir);  
 }
 */
+
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
@@ -182,10 +198,10 @@ void btree_recorrer_extra(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisita
 }
 //Piense cu´ales de las funciones del ejercicio anterior se podr´ıan definir de manera compacta llamando
 //a btree recorrer extra con un orden, una funci´on visitante y un dato extra apropiados
-
+/*
 void btree_recorrer_bfs(BTree arbol, FuncionVisitante visit){
   if(arbol == NULL) return;
-  visit(arbol->dato);
+  visit(&arbol->dato);
   return btree_busqueda_por_extension(arbol->left,visit);
   return btree_busqueda_por_extension(arbol->right,visit);
-}
+}*/

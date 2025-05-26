@@ -39,7 +39,7 @@ BTree btree_unir(int dato, BTree left, BTree right);
  */
 void btree_recorrer(BTree arbol, BTreeOrdenDeRecorrido orden,FuncionVisitante visit);
 
-void btree_recorrerPRE_iter(BTree arbol,FuncionVisitante visit);
+void btree_recorrer_pre_it(BTree arbol,FuncionVisitante visit);
 
 int btree_nnodos(BTree arbol);
 
