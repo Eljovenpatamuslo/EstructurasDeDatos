@@ -68,8 +68,7 @@ BSTree bstree_insertar(BSTree raiz, void *dato, FuncionCopiadora copia,
 /**
  * bstree_recorrer: Recorrido DSF del arbol
  */
-void bstree_recorrer(BSTree raiz, BSTreeRecorrido orden,
-                     FuncionVisitanteExtra visita, void *extra) {
+void bstree_recorrer(BSTree raiz, BSTreeRecorrido orden,FuncionVisitanteExtra visita, void *extra) {
   if (raiz != NULL) {
     if (orden == BTREE_RECORRIDO_PRE)
       visita(raiz->dato, extra);
@@ -80,4 +79,49 @@ void bstree_recorrer(BSTree raiz, BSTreeRecorrido orden,
     if (orden == BTREE_RECORRIDO_POST)
       visita(raiz->dato, extra);
   }
+}
+
+BSTree min_hoja(BSTree arbol){
+  if(arbol == NULL){
+    return NULL;
+  }
+  if(arbol->izq == NULL){
+    return arbol;
+  }
+  return min_hoja(arbol->izq);
+}
+
+BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, FuncionDestructora dest){
+  if(arbol == NULL) return arbol;
+
+  if(comp(arbol->dato,dato) > 0){
+    arbol->izq = bstree_eliminar(arbol->izq,dato,comp,dest);
+    return arbol;
+  }
+  if(comp(arbol->dato,dato) < 0){
+    arbol->der = bstree_eliminar(arbol->der,dato,comp,dest);
+    return arbol;
+  }
+
+  if(arbol->der == NULL && arbol->izq == NULL){
+    dest(arbol->dato);
+    free(arbol);
+    return NULL;
+  }
+  if(arbol->der != NULL && arbol->izq == NULL){
+    BSTree aux = arbol->der;
+    dest(arbol->dato);
+    free(arbol);
+    return aux;
+  }
+  if(arbol->der == NULL && arbol->izq != NULL){
+    BSTree aux = arbol->izq;
+    dest(arbol->dato);
+    free(arbol);
+    return aux;
+  }
+  BSTree aux = min_hoja(arbol->der);
+  arbol->dato = aux->dato;
+  arbol->der = bstree_eliminar(arbol->der, aux->dato, comp, dest);
+  return arbol;
 }

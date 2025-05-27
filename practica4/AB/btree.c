@@ -99,24 +99,23 @@ void btree_recorrer_pre_it(BTree arbol, FuncionVisitante visit) {
   pila_de_nodos = pila_apilar(pila_de_nodos, arbol, no_copia);
 
   while(!pila_es_vacia(pila_de_nodos)) {
-    printf("Printeo casi");
     BTree nodo_actual = pila_tope(pila_de_nodos);
     visit(&nodo_actual->dato);
-    printf("Pintie");
 
     pila_desapilar(pila_de_nodos, no_destruir);
-    printf("Desapile");
 
     if (!btree_empty(nodo_actual->right)){
       pila_de_nodos = pila_apilar(pila_de_nodos, nodo_actual->right, no_copia);
-      printf("Hay a la derecha");
+      printf("jaffre");
     }
-    if (!btree_empty(nodo_actual->left))
+    if (!btree_empty(nodo_actual->left)){
       pila_de_nodos = pila_apilar(pila_de_nodos, nodo_actual->left, no_copia);
+      printf("apta");
+    }
   }
   pila_destruir(pila_de_nodos, no_destruir);  
-}
-*/
+}*/
+
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 

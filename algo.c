@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <thread>
+
 
 int buscar_repetido(int arr[], int len) {
 	int i, j, terminar = 0;

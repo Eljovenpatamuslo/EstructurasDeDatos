@@ -54,6 +54,9 @@ int main() {
   assert(bstree_buscar(arbol, "parques", comparar_cadena) == 0);
   assert(bstree_buscar(arbol, "EDyA1", comparar_cadena) == 0);
 
+  BSTree arbol1 = bstree_eliminar(arbol,"arbol", comparar_cadena, destruir_cadena);
+  bstree_recorrer(arbol1, BTREE_RECORRIDO_IN, imprimir_cadena, NULL);
+
   // Destruir arbol
   bstree_destruir(arbol, destruir_cadena);
 

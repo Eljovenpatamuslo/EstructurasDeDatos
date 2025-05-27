@@ -36,7 +36,8 @@ Pila pila_apilar(Pila pila, int dato){
 }
 
 void pila_desapilar(Pila pila){
-    slist_eliminar(pila,0,destruir2);
+    slist_eliminar_primero(pila,destruir2);
+    //slist_eliminar(pila,0,destruir2);
 }
 
 void visitar(void* dato){

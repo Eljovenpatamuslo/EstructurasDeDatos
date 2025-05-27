@@ -24,7 +24,7 @@ int main() {
   printf("suma de todos los nodos :%i\n",btree_sumar(raiz));
   printf("profundidad :%i\n",btree_profundidad(raiz,3));
   printf("%i\n",btree_busqueda_por_extension(raiz,3));*/
-  //btree_recorrer_pre_it(raiz,imprimir_entero);
+  btree_recorrer_pre_it(raiz,imprimir_entero);
   btree_destruir(raiz);
   btree_destruir(raiz2);
 
