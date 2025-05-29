@@ -19,6 +19,13 @@ typedef struct _BST_Nodo *BSTree;
  */
 BSTree bstee_crear();
 
+
+/**
+ * bstree_es_vacio: Retorna si un árbol es vacío
+ */
+int bstree_es_vacio(BSTree arbol);
+
+
 /**
  * Destruye el arbol y sus datos.
  */
@@ -42,5 +49,12 @@ void bstree_recorrer(BSTree, BSTreeRecorrido, FuncionVisitanteExtra,
                      void *extra);
 
 BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, FuncionDestructora dest);
+
+/**
+ * Dado un indice k devuelve el k-ésimo menor elemento del árbol,
+ * de no encontrarlo devuelve NULL.
+ */
+void *bstree_k_esimo_menor(BSTree arbol, int k);
+
 
 #endif //__BSTREE_H__

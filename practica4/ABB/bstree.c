@@ -19,6 +19,13 @@ struct _BST_Nodo {
 BSTree bstee_crear() { return NULL; }
 
 /**
+ * bstree_es_vacio: Retorna si un árbol es vacío
+ */
+int bstree_es_vacio(BSTree arbol) {
+  return arbol == NULL;
+}
+
+/**
  * bstree_destruir: Destruye el arbol y sus datos
  */
 void bstree_destruir(BSTree raiz, FuncionDestructora destr) {
@@ -124,4 +131,46 @@ BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, Funcion
   arbol->dato = aux->dato;
   arbol->der = bstree_eliminar(arbol->der, aux->dato, comp, dest);
   return arbol;
+}
+
+/**
+  * Función auxiliar utilizada por bstree_k_esimo_menor para
+  * guardar el valor de k en cada llamada recursiva. 
+  */
+static void *bstree_k_esimo_menor_aux(BSTree arbol, int *k) {
+   /* Si el árbol es vacío no hay elementos. */
+  if (bstree_es_vacio(arbol)){
+    return NULL;  
+  }
+  void *dato;
+  /* Llamada recursiva al subárbol izquierdo. */
+  dato = bstree_k_esimo_menor_aux(arbol->izq, k);
+  if (dato != NULL){
+    /* Si el dato no es NULL ya encontré el dato en el subárbol izquierdo. */
+    return dato;
+  }
+  /* Veo el nodo actual */
+  if (*k == 0){
+    /* Se está retornando la dirección del dato dentro del árbol.
+    Si en el main de modifica o libera el dato devuelto por esta función,
+    también se modificará dentro de esta estuctura. */
+    return arbol->dato; 
+  }
+  --(*k);
+  /* Llamada recursiva al subárbol derecho */
+  return bstree_k_esimo_menor_aux(arbol->der, k);
+} 
+
+/**
+ * Dado un indice k devuelve el k-ésimo menor elemento del árbol,
+ * de no encontrarlo devuelve NULL.
+ */
+void *bstree_k_esimo_menor(BSTree arbol, int k) {
+  /* La idea es recorrer el árbol usando el algoritmo de busqueda en profundidad
+  visitando los datos de forma inorder (es decir, de menor a mayor). 
+  Cada vez que se visita un dato, se reduce el contador en 1 y cuando este se haga 0, 
+  el recorrido habra llegado al nodo buscado. Se usa un puntero a un entero porque todas
+  las llamadas recursivas deben tener acceso a la misma variable contador 
+  (recordar que en c los parámetros se pasan por valor) */
+  return bstree_k_esimo_menor_aux(arbol, &k);   
 }

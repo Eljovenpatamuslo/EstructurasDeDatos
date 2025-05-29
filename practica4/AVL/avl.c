@@ -176,7 +176,11 @@ static AVL_Nodo* avl_nodo_rebalancear(AVL_Nodo* raiz) {
     raiz = avl_nodo_rotacion_simple_der(raiz);
 
   } else if (avl_nodo_factor_balance(raiz) == 2) { // desbalanceado a derecha
-    /** COMPLETAR */
+
+    if (avl_nodo_factor_balance(raiz->der) == 1) // desbalanceado RL
+      raiz->der = avl_nodo_rotacion_simple_der(raiz->der);
+
+    raiz = avl_nodo_rotacion_simple_izq(raiz);
 
   }
 
@@ -208,6 +212,58 @@ static AVL_Nodo* avl_nodo_insertar(AVL_Nodo* raiz, void* dato,
 void avl_insertar(AVL arbol, void* dato) {
   arbol->raiz = avl_nodo_insertar(arbol->raiz, dato, arbol->copia, arbol->comp);
 }
+
+
+/**
+ * avl_nodo_menor: Devuelve el nodo con el menor dato del árbol.
+ */
+static AVL_Nodo *avl_nodo_menor(AVL_Nodo *raiz) {
+  /* COMPLETAR */
+  (void) raiz; // para silenciar error de parmámetro sin usar.
+  assert(0);
+}
+
+/**
+ * avl_nodo_eliminar: Elimina el dato del árbol, manteniendo la propiedad de los
+ * arboles AVL. No hace nada si el dato no se encuentra en el árbol.
+ */
+static AVL_Nodo* avl_nodo_eliminar(AVL_Nodo* raiz, void* dato,
+  FuncionDestructora destr, FuncionComparadora comp) {
+
+  if (raiz == NULL) // el dato no se encuentra en el árbol
+    return NULL;
+
+  int c = comp(dato, raiz->dato);
+  if (c < 0) // el dato puede estar en el subárbol izq
+    raiz->izq = avl_nodo_eliminar(raiz->izq, dato, destr, comp);
+  else if (c > 0) // el dato puede estar en el subárbol der
+    raiz->der = avl_nodo_eliminar(raiz->der, dato, destr, comp);
+  else { // el dato está en el nodo actual
+    if (raiz->izq == NULL || raiz->der == NULL) { // el nodo a eliminar es una hoja o
+                                                  // tiene exactamente un hijo
+      AVL_Nodo *sucesor = raiz->izq == NULL ? raiz->der : raiz->izq;
+      destr(raiz->dato);
+      free(raiz);
+      return sucesor; // no es necesario rebalancear en este caso
+    } else { // el nodo a eliminar tiene dos hijos.
+      AVL_Nodo *menor = avl_nodo_menor(raiz->der);
+      // reemplazamos el dato del nodo a eliminar con el dato del nodo del sucesor
+      // in-order en el subárbol derecho.
+      /* COMPLETAR */
+      (void) menor; // para silenciar error de variable sin usar.
+      assert(0);
+    }
+  }
+
+  raiz->altura = 1 + avl_nodo_max_altura_hijos(raiz);
+
+  return avl_nodo_rebalancear(raiz);
+}
+void avl_eliminar(AVL arbol, void* dato) {
+  arbol->raiz = avl_nodo_eliminar(arbol->raiz, dato, arbol->destr, arbol->comp);
+}
+
+
 
 /**
  * avl_validar: Retorna 1 si el arbol cumple la propiedad de los arboles AVL,

@@ -46,4 +46,9 @@ int avl_validar(AVL);
  */
 void avl_recorrer(AVL, AVLRecorrido, FuncionVisitanteExtra, void *);
 
+/**
+ * Elimina el dato del arbol manteniendo que sea AVL 
+ */
+void avl_eliminar(AVL arbol, void* dato);
+
 #endif /* __AVL_H__*/

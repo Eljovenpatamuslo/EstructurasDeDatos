@@ -19,11 +19,34 @@ static void *copiar_cadena(void *dato) {
 static int comparar_cadena(void *dato1, void *dato2) {
   return strcmp(dato1, dato2);
 }
-static void destruir_cadena(void *dato) { free(dato); }
+static void destruir_cadena(void *dato) {
+  free(dato);
+}
+
+
 static void imprimir_cadena(void *dato, __attribute__((unused)) void *extra) {
   /* __attribute__((unused)) le dice al compilador que esta variable puede no
    * ser usada, de esta forma las banderas no tiran warnings.*/
   printf("\"%s\" ", (char *)dato);
+}
+
+
+static void *f_copiar(void *dato) {
+  int *copia = malloc(sizeof(int));
+  *copia = *((int *) dato);
+  return copia; 
+}
+
+static int f_comp(void *dato1, void *dato2) {
+  return *((int *)dato1) - *((int *)dato2);
+}
+
+static void f_destruir (void *dato) {
+  free(dato);
+}
+
+static void f_recorrer(void *dato, __attribute__((unused)) void *extra) {
+  printf("%d ", *((int *)dato));
 }
 
 int main() {
@@ -59,6 +82,52 @@ int main() {
 
   // Destruir arbol
   bstree_destruir(arbol, destruir_cadena);
+
+  BSTree arbol2 = bstee_crear();
+
+    /* Caso base para el árbol vacío. */
+  assert(bstree_k_esimo_menor(arbol2, 0) == NULL);
+  int j;
+  /* Creo un arbol de la forma
+              0
+            /   \
+          -2     1
+         /   \    \
+       -3    -1    2
+                    \
+                     3
+                    / \
+               números random */
+  j = 0;
+  arbol2= bstree_insertar(arbol2, &j, f_copiar, f_comp);
+  j = -2;
+  arbol2 = bstree_insertar(arbol2, &j, f_copiar, f_comp);
+  j = -1;
+  arbol2 = bstree_insertar(arbol2, &j, f_copiar, f_comp);
+  j = -3;
+  arbol2 = bstree_insertar(arbol2, &j, f_copiar, f_comp);
+  for (int i = 1; i < 4; i++) 
+    arbol2 = bstree_insertar(arbol2, &i, f_copiar, f_comp);
+  for (int i = 0; i < 15; ++i) {
+    int i = rand() % 100;
+    arbol2 = bstree_insertar(arbol2, &i, f_copiar, f_comp);
+  }
+  /* Veo en pantalla el orden de los elementos. */
+  puts("Recorrido IN");
+  bstree_recorrer(arbol2, BTREE_RECORRIDO_IN, f_recorrer, NULL);
+  puts("");
+  /* Test de bstree_k_esimo_menor en diferentes casos. */
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 0)) == -3);  
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 1)) == -2);  
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 2)) == -1); 
+  
+  
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 5)) == 2);
+  assert( bstree_k_esimo_menor(arbol2, 30) == NULL);  
+  assert( bstree_k_esimo_menor(arbol2, -1) == NULL);  
+
+
+  bstree_destruir(arbol2, f_destruir);
 
   return 0;
 }
