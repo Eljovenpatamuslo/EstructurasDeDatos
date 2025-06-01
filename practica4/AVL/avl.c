@@ -218,7 +218,13 @@ void avl_insertar(AVL arbol, void* dato) {
  * avl_nodo_menor: Devuelve el nodo con el menor dato del árbol.
  */
 static AVL_Nodo *avl_nodo_menor(AVL_Nodo *raiz) {
-  /* COMPLETAR */
+  if(raiz == NULL){
+    return NULL;
+  }
+  if(raiz->izq == NULL){
+    return raiz;
+  }
+  return avl_nodo_menor(raiz->izq);
   (void) raiz; // para silenciar error de parmámetro sin usar.
   assert(0);
 }
@@ -249,7 +255,8 @@ static AVL_Nodo* avl_nodo_eliminar(AVL_Nodo* raiz, void* dato,
       AVL_Nodo *menor = avl_nodo_menor(raiz->der);
       // reemplazamos el dato del nodo a eliminar con el dato del nodo del sucesor
       // in-order en el subárbol derecho.
-      /* COMPLETAR */
+      raiz->dato = menor->dato;
+      raiz->der = avl_nodo_eliminar(raiz->der, menor->dato, destr, comp);
       (void) menor; // para silenciar error de variable sin usar.
       assert(0);
     }
@@ -265,6 +272,7 @@ void avl_eliminar(AVL arbol, void* dato) {
 
 
 
+
 /**
  * avl_validar: Retorna 1 si el arbol cumple la propiedad de los arboles AVL,
  * y 0 en caso contrario.
@@ -277,8 +285,9 @@ void avl_eliminar(AVL arbol, void* dato) {
 static int avl_nodo_validar_abb(AVL_Nodo* raiz, void* min, void* max,
   FuncionComparadora comp) {
   // si la raiz es vacia, retornar exitosamente
-  if (raiz == NULL)
+  if (raiz == NULL){
     return 1;
+  }
   else {
     // sino, validar intervalo
     if (min != NULL && comp(raiz->dato, min) <= 0)
@@ -311,6 +320,8 @@ int avl_validar(AVL arbol) {
   return (avl_nodo_validar_altura_y_balance(arbol->raiz) &&
     avl_nodo_validar_abb(arbol->raiz, NULL, NULL, arbol->comp));
 }
+
+
 
 /**
  * avl_recorrer: Recorrido DFS del arbol
