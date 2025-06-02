@@ -34,6 +34,7 @@ int main() {
   for (int i = 0; i < 500; ++i) {
     int i = rand() % 1000;
     avl_insertar(arbol, &i);
+    //printf("%i",avl_validar(arbol));
     assert(avl_validar(arbol) == 1);
   }
   avl_destruir(arbol);
@@ -51,10 +52,15 @@ int main() {
     puts("");
   }
 
+  avl_eliminar(arbol2, &numeros[7]);
+  avl_recorrer(arbol2, AVL_RECORRIDO_PRE, imprimir_puntero_entero, NULL);
+    puts("");
+
+
   // caso de prueba 3:
   // buscar numeros en el arbol
   int otrosNumeros[] = { -50, -4, 5, 14, 27, 56 };
-  for (int i = 0; i < 8; ++i)
+  for (int i = 0; i < 7; ++i)
     assert(avl_buscar(arbol2, numeros + i) == 1);
   for (int i = 0; i < 6; ++i)
     assert(avl_buscar(arbol2, otrosNumeros + i) == 0);

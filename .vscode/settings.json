@@ -65,6 +65,8 @@
     "contacto.h": "c",
     "colaarr.h": "c",
     "pilalist.h": "c",
-    "xutility": "c"
+    "xutility": "c",
+    "random": "c",
+    "heap.h": "c"
   }
 }
