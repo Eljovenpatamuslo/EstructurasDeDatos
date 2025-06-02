@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Gbtree.h"
+#include "bstree.h"
 
 static void imprimir_entero(void* data) {
   printf("%d ", *(int*)data);

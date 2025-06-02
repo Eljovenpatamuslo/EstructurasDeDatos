@@ -89,7 +89,11 @@ void no_destruir (void* dato){
   return;
 }
 
-/*
+static void imprimir_entero(void* data) {
+  printf("%d ", *(int*)data);
+}
+
+
 void btree_recorrer_pre_it(BTree arbol, FuncionVisitante visit) {
   if (btree_empty(arbol))
     return;
@@ -100,9 +104,10 @@ void btree_recorrer_pre_it(BTree arbol, FuncionVisitante visit) {
 
   while(!pila_es_vacia(pila_de_nodos)) {
     BTree nodo_actual = pila_tope(pila_de_nodos);
-    visit(&nodo_actual->dato);
+    visit(&(nodo_actual->dato));
 
     pila_desapilar(pila_de_nodos, no_destruir);
+    pila_imprimir(pila_de_nodos,imprimir_entero);
 
     if (!btree_empty(nodo_actual->right)){
       pila_de_nodos = pila_apilar(pila_de_nodos, nodo_actual->right, no_copia);
@@ -114,7 +119,7 @@ void btree_recorrer_pre_it(BTree arbol, FuncionVisitante visit) {
     }
   }
   pila_destruir(pila_de_nodos, no_destruir);  
-}*/
+}
 
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
