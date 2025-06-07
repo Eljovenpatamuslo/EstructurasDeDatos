@@ -77,7 +77,7 @@ int main() {
   assert(bstree_buscar(arbol, "parques", comparar_cadena) == 0);
   assert(bstree_buscar(arbol, "EDyA1", comparar_cadena) == 0);
 
-  BSTree arbol1 = bstree_eliminar(arbol,"arbol", comparar_cadena, destruir_cadena);
+  BSTree arbol1 = bstree_eliminar(arbol,"unr", comparar_cadena, destruir_cadena);
   bstree_recorrer(arbol1, BTREE_RECORRIDO_IN, imprimir_cadena, NULL);
 
   // Destruir arbol
@@ -120,6 +120,7 @@ int main() {
   assert( *((int *)bstree_k_esimo_menor(arbol2, 0)) == -3);  
   assert( *((int *)bstree_k_esimo_menor(arbol2, 1)) == -2);  
   assert( *((int *)bstree_k_esimo_menor(arbol2, 3)) == 0); 
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 2)) == -1); 
   
   
   assert( *((int *)bstree_k_esimo_menor(arbol2, 5)) == 2);
