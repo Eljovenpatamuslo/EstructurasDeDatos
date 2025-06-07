@@ -65,5 +65,9 @@ void mergeSort(int arr[], int left, int right) {
     }
 }
 int main(){
-    
+    int arr[] = {10,5,43,34,77,35,2,18,96,65};
+    mergeSort(arr,0,9);
+    for(int i=0; i<10; i++){
+        printf("%i\n",arr[i]);
+    }
 }
