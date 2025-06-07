@@ -52,7 +52,8 @@ int main() {
     puts("");
   }
 
-  avl_eliminar(arbol2, &numeros[7]);
+  avl_eliminar(arbol2, &numeros[5]);//16
+  assert(avl_validar(arbol2) == 1);
   avl_recorrer(arbol2, AVL_RECORRIDO_PRE, imprimir_puntero_entero, NULL);
     puts("");
 
@@ -60,8 +61,10 @@ int main() {
   // caso de prueba 3:
   // buscar numeros en el arbol
   int otrosNumeros[] = { -50, -4, 5, 14, 27, 56 };
-  for (int i = 0; i < 7; ++i)
+  for (int i = 0; i < 7; ++i){
+    if(i == 5) i++;//saltea el 5to(16) del arreglo
     assert(avl_buscar(arbol2, numeros + i) == 1);
+    }
   for (int i = 0; i < 6; ++i)
     assert(avl_buscar(arbol2, otrosNumeros + i) == 0);
 

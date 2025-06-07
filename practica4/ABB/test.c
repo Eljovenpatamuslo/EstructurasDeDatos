@@ -119,7 +119,7 @@ int main() {
   /* Test de bstree_k_esimo_menor en diferentes casos. */
   assert( *((int *)bstree_k_esimo_menor(arbol2, 0)) == -3);  
   assert( *((int *)bstree_k_esimo_menor(arbol2, 1)) == -2);  
-  assert( *((int *)bstree_k_esimo_menor(arbol2, 2)) == -1); 
+  assert( *((int *)bstree_k_esimo_menor(arbol2, 3)) == 0); 
   
   
   assert( *((int *)bstree_k_esimo_menor(arbol2, 5)) == 2);
