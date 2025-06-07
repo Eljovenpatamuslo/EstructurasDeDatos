@@ -79,10 +79,37 @@ void test_heapsort(int n){
     free(arr);
 }
 
+void test_pqueue(){
+    // Crear el heap
+    PriorityQueue pq = cola_prioridad_crear(comp_int, copy_int, destr_int);
+
+    // Insertar 5 elementos
+    int valores[] = {14, 58, 19, 52, 2, 98, 71};
+    for (int i = 0; i < 7; i++) {
+        cola_prioridad_insertar(&valores[i], pq);
+    }
+    
+    printf("Recorrido de la Priority Queue:\n");
+    bheap_recorrer(print_int, pq);
+    printf("\n");
+    
+    printf("Extrayendo elementos de la Queue (en orden):\n");
+    while (!cola_prioridad_es_vacia(pq)) {
+        int* max = (int*)cola_prioridad_maximo(pq);
+        if(max != NULL) printf("%d ", *max);
+        cola_prioridad_eliminar_maximo(pq);
+    }
+    printf("\n");
+
+    // Destruir heap
+    cola_prioridad_destruir(pq);
+}
+
 int main(int argv, char* argc[]) {
 
     test_bheap();
     int test_size = atoi(argc[1]); 
     test_heapsort(test_size);
+    test_pqueue();
     return 0;
 }

@@ -140,6 +140,10 @@ void dummy_destr(void* dato){
 }
 
 void* bheap_pop(BHeap bHeap){
+    if (bHeap->ultimo < 0) {
+        return NULL; // El heap está vacío, no hay nada que eliminar
+    }
+
     void* max = bHeap->arr[0];
     // Reemplazamos la raiz por el ultimo
     bHeap->arr[0] = bHeap->arr[bHeap->ultimo--];
@@ -157,73 +161,36 @@ void heapSort(void** arr, int largo, FuncionComparadora comp){
     free(bHeap);
 }
 
-/*#define max(a,b) (((a) > (b)) ? (a) : (b))
-
-BHeap bheap_crear(int capacidad, FuncionComparadora comp){
-    BHeap nuevoArbol = malloc(sizeof(BHeap));
-    nuevoArbol->arr = malloc(sizeof(void*)*capacidad);
-    nuevoArbol->capacidad = capacidad;
-    nuevoArbol->comp = comp;
-    nuevoArbol->ultimo = -1;
-    return nuevoArbol;
+//crear una Priority queue
+PriorityQueue cola_prioridad_crear(FuncionComparadora comp, FuncionCopia copy,FuncionDestructora destr){
+    return bheap_crear(comp,copy,destr);
 }
 
-void bheap_destruir(BHeap raiz, FuncionDestructora destroy){
-    for(int i = 0;i<raiz->capacidad;i++){
-        destroy(raiz->arr[i]);
+void cola_prioridad_destruir(PriorityQueue pq){
+    bheap_destruir(pq);
+}
+
+//retorne 1 si la cola esta vacia y 0 en caso contrario
+int cola_prioridad_es_vacia(PriorityQueue pq){
+    return(pq->ultimo < 0);
+}
+//  inserta un elemento en la cola con una determinada prioridad.
+void cola_prioridad_insertar( void* dato, PriorityQueue pq)
+{
+    bheap_insertar(dato,pq);
+}
+
+// retorna el elemento prioritario de la cola
+void* cola_prioridad_maximo(PriorityQueue pq)
+{
+   if (pq->ultimo < 0) {
+        return NULL; // No hay elementos en el heap
     }
-    free(raiz->arr);
-    free(raiz);
+    return pq->arr[0];
 }
 
-int bheap_es_vacio(BHeap raiz){
-    return raiz->ultimo == -1;
+//elimina el elemento prioritario de la cola
+void cola_prioridad_eliminar_maximo(PriorityQueue pq)
+{
+    bheap_pop(pq);
 }
-
-void bheap_recorrer(BHeap raiz, FuncionVisitante visit){
-    for(int i = 0; i<=raiz->ultimo;i++){
-        visit(raiz->arr[i]);
-    }
-}
-BHeap bheap_insertar(BHeap raiz, void* dato){
-    if(raiz->ultimo == raiz->capacidad-1){
-        raiz->capacidad = raiz->capacidad * 2;
-        raiz->arr = realloc(raiz->arr,sizeof(void*)*raiz->capacidad);
-    }
-
-    raiz->arr[++(raiz->ultimo)] = dato;
-    for(int ind = raiz->ultimo; ind > 0 && raiz->comp(raiz->arr[ind], raiz->arr[ind/2]) ; ind/=2){
-        void* t = raiz->arr[ind];
-        raiz->arr[ind] = raiz->arr[ind/2];
-        raiz->arr[ind/2] = t;
-    }
-    return raiz;
-}
-BHeap bheap_eliminar(BHeap raiz, void* dato){
-    int i=0;
-    for(;i<=raiz->ultimo && raiz->comp(raiz->arr[i],dato);i++);
-    printf("%i\n",*((int*)raiz->arr[i]));
-    raiz->arr[i] = raiz->arr[raiz->ultimo];
-    raiz->ultimo--;
-    if(raiz->arr[i] < raiz->arr[i/2]){
-        for(int ind = raiz->ultimo; ind > 0 && raiz->comp(raiz->arr[ind], raiz->arr[ind/2]) ; ind/=2){
-        void* t = raiz->arr[ind];
-        raiz->arr[ind] = raiz->arr[ind/2];
-        raiz->arr[ind/2] = t;
-    }    
-    }else{
-
-    }
-
-    return raiz;
-}
-
-BHeap bheap_crear_desde_arr(void **arr, int largo, FuncionCopia copiar, FuncionComparadora comp){
-    BHeap arbol = bheap_crear(largo,comp);
-    qsort(arr,largo,sizeof(void*),comp);     
-    arbol->arr = arr;
-    arbol->capacidad = largo;
-    arbol->ultimo = largo-1;
-    arbol->comp = comp;
-    return arbol;
-}*/

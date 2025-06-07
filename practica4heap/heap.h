@@ -19,7 +19,7 @@ typedef struct _BHeap{
     FuncionDestructora destr;
  } *BHeap;
 
-
+typedef BHeap PriorityQueue;
 // Crea un BHeap binario vacío
 BHeap bheap_crear(FuncionComparadora comp, FuncionCopia copy, FuncionDestructora destr);
 
@@ -48,19 +48,21 @@ BHeap bheap_crear_desde_arr(void **arr, int largo,FuncionComparadora comp, Funci
 // Heapsort
 void heapSort(void** arr, int largo, FuncionComparadora comp);
 
-/*typedef struct _BHeap {
-    void **arr;
-    int capacidad;
-    int ultimo;
-    FuncionComparadora comp;
-} *BHeap;
+//crear una Priority queue
+PriorityQueue cola_prioridad_crear(FuncionComparadora comp, FuncionCopia copy,FuncionDestructora destr);
 
-BHeap bheap_crear(int capacidad, FuncionComparadora comp);
-void bheap_destruir(BHeap raiz, FuncionDestructora destroy);
-int bheap_es_vacio(BHeap raiz);
-void bheap_recorrer(BHeap raiz, FuncionVisitante visit);
-BHeap bheap_insertar(BHeap raiz, void* dato);
-BHeap bheap_eliminar(BHeap raiz, void* dato);
+void cola_prioridad_destruir(PriorityQueue pq);
 
-BHeap bheap_crear_desde_arr(void **arr, int largo, FuncionCopia copiar, FuncionComparadora comp);*/
+//retorne 1 si la cola esta vacia y 0 en caso contrario
+int cola_prioridad_es_vacia(PriorityQueue pq);
+
+//  inserta un elemento en la cola con una determinada prioridad.
+void cola_prioridad_insertar(void* dato, PriorityQueue pq);
+
+// retorna el elemento prioritario de la cola
+void* cola_prioridad_maximo(PriorityQueue pq);
+
+//elimina el elemento prioritario de la cola
+void cola_prioridad_eliminar_maximo(PriorityQueue pq);
+
 #endif
