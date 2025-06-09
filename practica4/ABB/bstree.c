@@ -99,6 +99,10 @@ BSTree min_hoja(BSTree arbol){
 }
 
 static void dummy_delete(void* dato){
+return;
+}
+
+static void dummy_delete(void* dato){
   return ;
 }
 
