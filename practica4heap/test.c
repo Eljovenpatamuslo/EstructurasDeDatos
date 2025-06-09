@@ -79,6 +79,31 @@ void test_heapsort(int n){
     free(arr);
 }
 
+void test_heapsort2(int n){
+    int* arr = malloc(sizeof(int) * n);
+    assert(arr);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand() % (n + 1); 
+    }
+    
+    printf("Arreglo original:\n");
+    for(int i=0; i<n; i++){
+        printf("%i\n", arr[i]);
+    }
+
+    heapSort2(arr, n);
+
+    printf("Arreglo ordenado con heapSort:\n");
+    for(int i=0; i<n; i++){
+        printf("%i\n", arr[i]);
+    }
+
+    free(arr);
+}
+
 void test_pqueue(){
     // Crear el heap
     PriorityQueue pq = cola_prioridad_crear(comp_int, copy_int, destr_int);
@@ -109,7 +134,7 @@ int main(int argv, char* argc[]) {
 
     test_bheap();
     int test_size = atoi(argc[1]); 
-    test_heapsort(test_size);
+    test_heapsort2(test_size);
     test_pqueue();
     return 0;
 }

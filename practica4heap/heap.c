@@ -161,6 +161,37 @@ void heapSort(void** arr, int largo, FuncionComparadora comp){
     free(bHeap);
 }
 
+void  swap_int(int* x, int* y) {
+    int  temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+
+//  Hunde el  elemento  en la  posicion  pos  del  arreglo  hasta  que  este  cumpla  lacondicion  de max -heap. n es la  cantidad  de  elementos  del  arreglo
+void  hundir2(int* arr , int n,int pos) {
+    int  max_pos = pos;
+    if (LEFT(pos) < n && arr[LEFT(pos)] > arr[max_pos ])
+      max_pos = LEFT(pos);
+    if (RIGHT(pos) < n && arr[RIGHT(pos)] > arr[max_pos ])
+      max_pos = RIGHT(pos);
+    if (max_pos  != pos) {
+        swap_int (&arr[pos], &arr[max_pos ]);
+        hundir2(arr , n,max_pos);
+    }
+}
+
+void heapSort2(int* arr, int largo){
+    for(int i = largo /2 ; i>= 0 ; i--){
+        hundir2(arr,i,largo);
+    }
+    for(int i = largo - 1; i >= 0; i--){
+        swap_int(&arr[0],&arr[i]);
+        hundir2(arr,i,0);
+
+    }
+}
+
 //crear una Priority queue
 PriorityQueue cola_prioridad_crear(FuncionComparadora comp, FuncionCopia copy,FuncionDestructora destr){
     return bheap_crear(comp,copy,destr);
