@@ -50,24 +50,35 @@ void merge(int arr[], int left, int mid, int right) {
 }
 
 // The subarray to be sorted is in the index range [left-right]
-void mergeSort(int arr[], int left, int right) {
+void mergeSort2(int arr[], int left, int right) {
     if (left < right) {
       
         // calculo punto medio
         int mid = left + (right - left) / 2;
 
         // ordeno las primeras y segundas mitades
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
+        mergeSort2(arr, left, mid);
+        mergeSort2(arr, mid + 1, right);
 
         // junto las mitades ordenadas
         merge(arr, left, mid, right);
     }
 }
+
+int* mergeSort(int arr[],int principio,int final){
+    int* newarr = malloc(sizeof(int)* (final+1));
+    for(int i=0; i<=final; i++){
+        newarr[i] = arr[i];
+    }
+    mergeSort2(newarr,principio,final);
+    return newarr;
+}
+
 int main(){
     int arr[] = {10,5,43,34,77,35,2,18,96,65};
-    mergeSort(arr,0,9);
+    int* nuevo = mergeSort(arr,0,9);
     for(int i=0; i<10; i++){
-        printf("%i\n",arr[i]);
+        printf("%i\n",nuevo[i]);
     }
+    free(nuevo);
 }

@@ -233,6 +233,10 @@ static AVL_Nodo *avl_nodo_menor(AVL_Nodo *raiz) {
  * avl_nodo_eliminar: Elimina el dato del árbol, manteniendo la propiedad de los
  * arboles AVL. No hace nada si el dato no se encuentra en el árbol.
  */
+static void dummy_delete(void* dato){
+  return ;
+}
+
 static AVL_Nodo* avl_nodo_eliminar(AVL_Nodo* raiz, void* dato,
   FuncionDestructora destr, FuncionComparadora comp) {
 
@@ -256,7 +260,7 @@ static AVL_Nodo* avl_nodo_eliminar(AVL_Nodo* raiz, void* dato,
       // reemplazamos el dato del nodo a eliminar con el dato del nodo del sucesor
       // in-order en el subárbol derecho.
       raiz->dato = menor->dato;
-      raiz->der = avl_nodo_eliminar(raiz->der, menor->dato, destr, comp);
+      raiz->der = avl_nodo_eliminar(raiz->der, menor->dato, dummy_delete, comp);
       (void) menor; // para silenciar error de variable sin usar.
     }
   }

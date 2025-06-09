@@ -27,7 +27,7 @@ int particionar(void** A, int start, int end) {
 }
 
 void qsort_new(void** arr, int start, int end) {
-    if (start >= end) return; // Condición de salida: rango inválido o de tamaño 1
+    if (end - start  > 1) return; // Condición de salida: rango inválido o de tamaño 1
     int pos = particionar(arr, start, end);
 
     qsort_new(arr, start, pos - 1); // Ordenar sublista izquierda
