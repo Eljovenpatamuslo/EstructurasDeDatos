@@ -98,6 +98,10 @@ BSTree min_hoja(BSTree arbol){
   return min_hoja(arbol->izq);
 }
 
+static void dummy_delete(void* dato){
+return;
+}
+
 BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, FuncionDestructora dest){
   if(arbol == NULL) return arbol;
 
@@ -129,7 +133,7 @@ BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, Funcion
   }
   BSTree aux = min_hoja(arbol->der);
   arbol->dato = aux->dato;
-  arbol->der = bstree_eliminar(arbol->der, aux->dato, comp, dest);
+  arbol->der = bstree_eliminar(arbol->der, aux->dato, comp, dummy_delete);
   return arbol;
 }
 
