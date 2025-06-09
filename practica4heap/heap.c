@@ -183,7 +183,7 @@ void  hundir2(int* arr , int n,int pos) {
 
 void heapSort2(int* arr, int largo){
     for(int i = largo /2 ; i>= 0 ; i--){
-        hundir2(arr,i,largo);
+        hundir2(arr,largo,i);
     }
     for(int i = largo - 1; i >= 0; i--){
         swap_int(&arr[0],&arr[i]);
