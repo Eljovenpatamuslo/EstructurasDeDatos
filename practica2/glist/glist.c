@@ -81,8 +81,10 @@ GList slist_insertar(GList list,int pos,void* data,FuncionCopia copy){
 void slist_eliminar(GList list,int pos,FuncionDestructora destroy){
   GList aux = list;
   for (int i=0; i<pos-1; aux = aux->next,i++);
-  destroy(aux->next->data);
-  aux->next = aux->next->next;
+  GList aux1 = aux->next;
+  destroy(aux1->data);
+  aux->next = aux1->next;
+  free(aux1);
 }
 
 int slist_contiene(GList list, void* data, FuncionComparadora compare){
@@ -115,8 +117,8 @@ GList slist_intersecar_custom(GList list1,GList list2,FuncionComparadora compare
   return Devolver;
 }
 
-GList slist_ordenar(GList list,FuncionComparadora compare,FuncionCopia copy){
-  if(list == NULL) return NULL;
+void slist_ordenar(GList list,FuncionComparadora compare,FuncionCopia copy){
+  if(list == NULL) return ;
   int activado = 0;
   while (!activado){
     activado = 1;
@@ -129,7 +131,7 @@ GList slist_ordenar(GList list,FuncionComparadora compare,FuncionCopia copy){
       }
     }
   }
-  return list;
+  //return list;
 }
 
 GList slist_reverso(GList list,FuncionCopia copy){
@@ -195,4 +197,16 @@ GList glist_filtrar(GList lista, FuncionCopia c, Predicado p){
     }
   }
   return slist_reverso(retornar,c);
+}
+
+//La función toma una lista y devuelve una lista simbolica(sin crear copias del dato) que cumplan el predicado
+GList glist_newfilter(GList lista, Predicado p){
+  if(lista == NULL) return NULL;
+  if(p(lista->data)){
+    GList nodo  = malloc(sizeof(GNode));
+    nodo->data = lista->data;
+    nodo->next = glist_newfilter(lista->next,p);
+    return nodo;
+  }
+  return glist_newfilter(lista->next,p);
 }

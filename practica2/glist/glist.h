@@ -56,7 +56,7 @@ GList slist_intersecar_custom(GList list1,GList list2,FuncionComparadora compare
 
 GList slist_intercalar(GList list1,GList list2,FuncionCopia copy);
 
-GList slist_ordenar(GList list,FuncionComparadora compare,FuncionCopia copy);
+void slist_ordenar(GList list,FuncionComparadora compare,FuncionCopia copy);
 
 GList slist_reverso(GList list,FuncionCopia copy);
 
@@ -65,4 +65,6 @@ GList slist_partir(GList list);
 GList slist_partir_opt(GList list);
 
 GList glist_filtrar(GList lista, FuncionCopia c, Predicado p);
+
+GList glist_newfilter(GList lista, Predicado p);
 #endif /* __GLIST_H__ */

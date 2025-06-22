@@ -2,6 +2,10 @@
 #include "glist.h"
 #include <stdio.h>
 #include <stdlib.h>
+void * nocopy(void* dato){
+  return dato;
+}
+
 
 int main() {
 
@@ -19,6 +23,7 @@ int main() {
         glist_agregar_inicio(lista, contactos[i], (FuncionCopia)contacto_copia);
     contacto_destruir(contactos[i]);
   }
+  
 
   GList lista2 = glist_crear();
   Contacto *contactos2[6];
@@ -36,40 +41,60 @@ int main() {
         glist_agregar_inicio(lista2, contactos2[i], (FuncionCopia)contacto_copia);
     contacto_destruir(contactos2[i]);
   }
-/*
+
   printf("Lista:\n");
   glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
-  //a
+  
+//a
   printf("%i\n",slist_longitud(lista));
-  //b
+  
+//b
   //glist_recorrer(slist_concatenar(lista,lista2), (FuncionVisitante)contacto_imprimir);
   printf("\n");
-  //c
-  glist_recorrer(slist_insertar(lista,3,contacto,(FuncionCopia)contacto_copia), (FuncionVisitante)contacto_imprimir);
+  
+//c 
+
+  lista = slist_insertar(lista,3,contacto,(FuncionCopia)contacto_copia);
+  glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
   printf("\n");
-  //d
-  //slist_eliminar(lista,3,(FuncionDestructora)contacto_destruir);
-  //glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
+  
+//d
+
+  slist_eliminar(lista,3,(FuncionDestructora)contacto_destruir);
+  glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
   printf("\n");
-  //e
+/*
+//e
   printf("%i\n",slist_contiene(lista,contacto,(FuncionComparadora)contacto_comparar));
-  //f
+  
+//f
   printf("%i\n",slist_indice(lista,contacto,(FuncionComparadora)contacto_comparar));
-  //g,h
+  
+//g,h
   printf("\n");
   GList lista3 = slist_intersecar_custom(lista2,lista2,(FuncionComparadora)contacto_comparar,(FuncionCopia)contacto_copia);
   glist_recorrer(lista3, (FuncionVisitante)contacto_imprimir);
+  glist_destruir(lista3, (FuncionDestructora)contacto_destruir);
   printf("\n");
-  //i
   
-  glist_recorrer(slist_ordenar(lista,(FuncionComparadora)contacto_comparar,(FuncionCopia)contacto_copia), (FuncionVisitante)contacto_imprimir);
+//i
+  slist_ordenar(lista,(FuncionComparadora)contacto_comparar,(FuncionCopia)contacto_copia);
+  glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
   printf("\n");
-  //j
-  glist_recorrer(slist_reverso(lista,(FuncionCopia)contacto_copia), (FuncionVisitante)contacto_imprimir);
+  
+//j
+  GList list_reverse = slist_reverso(lista,(FuncionCopia)contacto_copia);
+  glist_recorrer(list_reverse, (FuncionVisitante)contacto_imprimir);
+  glist_destruir(list_reverse,(FuncionDestructora)contacto_destruir);
+
   printf("\n");
-  //k
-  glist_recorrer(slist_intercalar(lista,lista2,(FuncionCopia)contacto_copia), (FuncionVisitante)contacto_imprimir);
-  //l
+
+//k
+GList list_interc = slist_intercalar(lista,lista2,(FuncionCopia)contacto_copia);
+  glist_recorrer(list_interc,(FuncionVisitante)contacto_imprimir);
+//l
+
+
   printf("\n");
   glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
   printf("\n");
@@ -77,14 +102,19 @@ int main() {
   printf("\n");
   glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
   printf("\n");
-  */
 
   glist_recorrer(slist_partir_opt(lista), (FuncionVisitante)contacto_imprimir);
+
+*/
   printf("ES ESTA FLACO\n");
   printf("\n");
   glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
+
+  
   glist_destruir(lista, (FuncionDestructora)contacto_destruir);
   glist_destruir(lista2, (FuncionDestructora)contacto_destruir);
-  free(contacto);
+  
+  contacto_destruir(contacto);
+ 
   return 0;
 }
