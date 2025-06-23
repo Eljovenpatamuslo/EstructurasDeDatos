@@ -34,7 +34,7 @@ void arreglo_enteros_imprimir(ArregloEnteros* arreglo){
 
 void arreglo_enteros_ajustar(ArregloEnteros* arreglo, int capacidad){
     if(arreglo->capacidad < capacidad){
-        arreglo->direccion = realloc(arreglo->direccion,capacidad);
+        arreglo->direccion = realloc(arreglo->direccion,sizeof(ArregloEnteros)*capacidad);
     }
     arreglo->capacidad = capacidad;
 }

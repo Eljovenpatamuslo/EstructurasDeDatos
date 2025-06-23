@@ -42,7 +42,7 @@ SGList sglist_insertar(SGList list, void *data, FuncionCopia copy, FuncionCompar
     }
 
     for(; aux->next != NULL && compare(data,aux->next->data) >= 0 ; aux = aux->next);
-    GList aux2 = aux->next;
+    SGList aux2 = aux->next;
     aux->next = newNodo;
     newNodo->next = aux2;
     return list;
@@ -61,10 +61,10 @@ int sglist_buscar(SGList list, void *data, FuncionComparadora compare){
     return 0;
 }
 
-SGList sglist_arr(void **arr, int length, FuncionCopia copy, FuncionComparadora compare){
+SGList sglist_arr(void **arr, int length, FuncionCopia copy, FuncionComparadora compare) {
     SGList list = sglist_crear();
-    for(int i = 0;i < length; i++){
-        list = sglist_insertar(list,arr[i],copy,compare);//mal
+    for (int i = 0; i < length; i++) {
+        list = sglist_insertar(list, arr[i], copy, compare);
     }
     return list;
 }

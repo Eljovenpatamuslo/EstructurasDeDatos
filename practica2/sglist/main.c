@@ -21,11 +21,16 @@ int main(){
     for (int i = 0; i < 6; ++i) {
         lista =
         sglist_insertar(lista, contactos[i], (FuncionCopia)contacto_copia,(FuncionComparadora)contacto_comparar);
-        contacto_destruir(contactos[i]);
     }
     sglist_recorrer(lista,(FuncionVisitante)contacto_imprimir);
     printf("%i\n",sglist_buscar(lista,contactos[1],(FuncionComparadora)contacto_comparar));
-    //sglist_recorrer(sglist_arr(arr,6,(FuncionCopia)contacto_copia,(FuncionComparadora)contacto_comparar),(FuncionVisitante)contacto_imprimir);
+    SGList newList = sglist_arr(arr,6,(FuncionCopia)contacto_copia,(FuncionComparadora)contacto_comparar);
+    sglist_recorrer(newList,(FuncionVisitante)contacto_imprimir);
+    for(int i = 0; i<6 ; i++){
+        contacto_destruir(contactos[i]);
+    }
+    sglist_destruir(newList,(FuncionDestructora)contacto_destruir);
     sglist_destruir(lista,(FuncionDestructora)contacto_destruir);
+    free(arr);
     return 0;
 }
