@@ -6,7 +6,21 @@ void * nocopy(void* dato){
   return dato;
 }
 
+int predicado(void* dato){
+  if(((Contacto*)dato)->edad > 40) return 1;
+  return 0;
+}
 
+static void glist_newdestruir(GList lista){
+  GList nodetodelete;
+  while (lista != NULL)
+  {
+    nodetodelete = lista;
+    lista = lista->next;
+    free(nodetodelete);
+  }
+  
+}
 int main() {
 
   GList lista = glist_crear();
@@ -110,6 +124,10 @@ GList list_interc = slist_intercalar(lista,lista2,(FuncionCopia)contacto_copia);
   printf("\n");
   glist_recorrer(lista, (FuncionVisitante)contacto_imprimir);
 
+  printf("\n");
+  GList list_filt = glist_newfilter(lista,predicado);
+  glist_recorrer(list_filt,(FuncionVisitante)contacto_imprimir);
+  glist_newdestruir(list_filt);
   
   glist_destruir(lista, (FuncionDestructora)contacto_destruir);
   glist_destruir(lista2, (FuncionDestructora)contacto_destruir);
