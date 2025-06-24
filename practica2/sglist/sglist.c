@@ -27,7 +27,7 @@ void sglist_recorrer(SGList list, FuncionVisitante visit){
 }
 
 SGList sglist_insertar(SGList list, void *data, FuncionCopia copy, FuncionComparadora compare){
-    SGList newNodo = malloc(sizeof(GNode));
+    /* SGList newNodo = malloc(sizeof(GNode));
     assert(newNodo != NULL);
 
     newNodo->data = copy(data);
@@ -45,6 +45,20 @@ SGList sglist_insertar(SGList list, void *data, FuncionCopia copy, FuncionCompar
     SGList aux2 = aux->next;
     aux->next = newNodo;
     newNodo->next = aux2;
+    return list; */
+    if(list == NULL){
+        SGList nodo = malloc(sizeof(GNode));
+        nodo->data = copy(data);
+        nodo->next = NULL;
+    return nodo;
+    }
+    if(compare(list->data,data) >= 0){
+        SGList nodo = malloc(sizeof(GNode));
+        nodo->data = copy(data);
+        nodo->next = list;
+        return nodo;
+    }
+    list->next = sglist_insertar(list->next, data,copy, compare);
     return list;
 }
 
