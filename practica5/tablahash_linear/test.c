@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CAPACIDAD_INICIAL 11
+#define CAPACIDAD_INICIAL 100 //11
 /** Capacidad inicial para la tabla hash */
 
 /**
