@@ -145,6 +145,7 @@ void tablahash_eliminar(TablaHash tabla, void *dato) {
     tabla->numElems--;
     tabla->destr(tabla->elems[idx].dato);
     tabla->elems[idx].dato = NULL;
+    tabla->elems[idx].usado = 0;
     return;
   }
 }
