@@ -104,6 +104,7 @@ void tablahash_insertar(TablaHash tabla, void *dato) {
       idx = (idx+1) % tabla->capacidad;  
     }
     tabla->elems[idx].dato = tabla->copia(dato);
+    tabla->elems[idx].usado = 1;
     return;
   }
 }
