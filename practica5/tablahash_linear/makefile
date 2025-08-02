@@ -2,8 +2,6 @@
 # ejecutar desde la terminal escribiendo "make" 
 # genera automáticamente el ejecutable del programa
 
-CC = gcc
-
 FLAGS = -Wall -g -Wextra -Werror -std=c99
 
 programa: test.o utils.o tablahash.o contacto.o
@@ -20,12 +18,8 @@ contacto.o: contacto.c contacto.h
 
 tablahash.o: tablahash.c tablahash.h
 	$(CC) -c $< $(FLAGS)
-	
-clean_o:
-	rm *.o
 
 clean:
-	rm *.o
-	rm programa
+	rm -f *.o programa
 
-.PHONY = clean
+.PHONY: clean
