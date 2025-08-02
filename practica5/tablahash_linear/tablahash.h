@@ -1,6 +1,9 @@
 #ifndef __TABLAHASH_H__
 #define __TABLAHASH_H__
 
+#include <assert.h>
+#include <stdlib.h>
+
 typedef void *(*FuncionCopiadora)(void *dato);
 /** Retorna una copia fisica del dato */
 typedef int (*FuncionComparadora)(void *dato1, void *dato2);
@@ -11,11 +14,30 @@ typedef void (*FuncionDestructora)(void *dato);
 typedef unsigned (*FuncionHash)(void *dato);
 /** Retorna un entero sin signo para el dato */
 
-typedef struct _TablaHash *TablaHash;
 
 /**
- * Crea una nueva tabla hash vacia, con la capacidad dada.
+ * Casillas en la que almacenaremos los datos de la tabla hash.
  */
+typedef struct {
+  void *dato;
+  int ocupado;
+} CasillaHash;
+
+/**
+ * Estructura principal que representa la tabla hash.
+ */
+struct _TablaHash {
+  CasillaHash *elems;
+  unsigned numElems;
+  unsigned capacidad;
+  FuncionCopiadora copia;
+  FuncionComparadora comp;
+  FuncionDestructora destr;
+  FuncionHash hash;
+};
+
+typedef struct _TablaHash *TablaHash;
+
 TablaHash tablahash_crear(unsigned capacidad, FuncionCopiadora copia,
                           FuncionComparadora comp, FuncionDestructora destr,
                           FuncionHash hash);
@@ -51,4 +73,6 @@ void *tablahash_buscar(TablaHash tabla, void *dato);
  */
 void tablahash_eliminar(TablaHash tabla, void *dato);
 
-#endif /* __TABLAHASH_H__ */
+void tablahash_redimensionar(TablaHash tabla);
+
+#endif
