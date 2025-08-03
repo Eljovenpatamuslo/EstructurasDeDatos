@@ -135,16 +135,14 @@ void tablahash_eliminar(TablaHash tabla, void *dato) {
     return;
   // Vaciar la casilla si hay coincidencia.
   else{
-        unsigned intentos = 0;
         unsigned h = idx;
-        for(;intentos < tabla->capacidad && tabla->comp(tabla->elems[h].dato,dato) != 0;h = (h+1)%tabla->capacidad){
-            intentos++;
-        }
-        if (intentos >= tabla->capacidad)
-            return;
+        for(;tabla->elems[h].dato != NULL && tabla->comp(tabla->elems[h].dato,dato) != 0;h = (h+1)%tabla->capacidad);
+        
+        if (tabla->elems[h].dato == NULL)
+          return;
         else{
-            tabla->elems[h].ocupado = 0;
-            tabla->numElems--;
+          tabla->elems[h].ocupado = 0;
+          tabla->numElems--;
         }
   }
 }
