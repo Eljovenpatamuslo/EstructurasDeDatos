@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+
 /**
  * Estructura del nodo del arbol de busqueda binaria.
  * Tiene un puntero al dato (dato),
@@ -98,9 +99,6 @@ BSTree min_hoja(BSTree arbol){
   return min_hoja(arbol->izq);
 }
 
-static void dummy_delete(void* dato){
-return;
-}
 
 static void dummy_delete(void* dato){
   return ;
@@ -182,4 +180,16 @@ void *bstree_k_esimo_menor(BSTree arbol, int k) {
   las llamadas recursivas deben tener acceso a la misma variable contador 
   (recordar que en c los parámetros se pasan por valor) */
   return bstree_k_esimo_menor_aux(arbol, &k);   
+}
+
+void filter_nodo(BSTree arbol, Predicado p, int* arr,int* n){
+  if(arbol == NULL){
+    return;
+  }
+  if(p(arbol->dato)){
+    arr[(*n)] = *((int*)arbol->dato);
+    (*n)++;
+  }
+  filter_nodo(arbol->izq, p , arr, n);
+  filter_nodo(arbol->der, p, arr, n);
 }

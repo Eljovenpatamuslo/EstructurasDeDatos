@@ -5,6 +5,7 @@ typedef void *(*FuncionCopiadora)(void *dato);
 typedef int (*FuncionComparadora)(void *, void *);
 typedef void (*FuncionDestructora)(void *dato);
 typedef void (*FuncionVisitanteExtra)(void *dato, void *extra);
+typedef int (*Predicado) (void *dato);
 
 typedef enum {
   BTREE_RECORRIDO_IN,  /** Inorden */
@@ -55,6 +56,8 @@ BSTree bstree_eliminar(BSTree arbol, void *dato,FuncionComparadora comp, Funcion
  * de no encontrarlo devuelve NULL.
  */
 void *bstree_k_esimo_menor(BSTree arbol, int k);
+
+void filter_nodo(BSTree arbol, Predicado p, int* arr,int* n);
 
 
 #endif //__BSTREE_H__

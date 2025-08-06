@@ -9,6 +9,9 @@
  */
 
 #define N_PALABRAS 16
+static int predicado(void* dato){
+  return *(int*)dato > 0;
+}
 
 static void *copiar_cadena(void *dato) {
   char *str = malloc(sizeof(char) * (strlen(dato) + 1));
@@ -126,6 +129,14 @@ int main() {
   assert( *((int *)bstree_k_esimo_menor(arbol2, 5)) == 2);
   assert( bstree_k_esimo_menor(arbol2, 30) == NULL);  
   assert( bstree_k_esimo_menor(arbol2, -1) == NULL);  
+
+  int array[100];
+  int n = 0;
+  printf("\nempieza el test:\n") ;
+  filter_nodo(arbol2,predicado,array,&n); 
+  for(int i = 0; i<n; i++){
+    printf("%i\n",array[i]);
+  }
 
 
   bstree_destruir(arbol2, f_destruir);
