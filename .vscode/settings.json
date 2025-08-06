@@ -67,6 +67,7 @@
     "pilalist.h": "c",
     "xutility": "c",
     "random": "c",
-    "heap.h": "c"
+    "heap.h": "c",
+    "tablahash.h": "c"
   }
 }
