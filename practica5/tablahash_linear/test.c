@@ -93,6 +93,24 @@ int main() {
   contacto_imprimir(ret);
   puts("");
 
+  contacto_destruir(agenda[3]);
+  agenda[3] = contacto_crear("Dardo Argento", "3410000680", 41);
+  tablahash_insertar(tabla, agenda[3]);
+  // Buscar
+  printf("\nBusqueda:\n");
+  for (int i = 0; i < 6; ++i) {
+    printf("Buscando el contacto: ");
+    contacto_imprimir(agenda[i]);
+    puts("");
+    Contacto *ret = tablahash_buscar(tabla, agenda[i]);
+    if (ret != NULL)
+      printf("\tSe encuentra en la tabla.\n");
+    else
+      printf("\tNo se encuentra en la tabla.\n");
+  }
+
+
+
   // Liberar memoria
   tablahash_destruir(tabla);
   for (int i = 0; i < 6; ++i)

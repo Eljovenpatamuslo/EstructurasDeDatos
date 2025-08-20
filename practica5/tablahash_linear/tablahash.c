@@ -69,7 +69,9 @@ void tablahash_insertar(TablaHash tabla, void *dato) {
     if(tabla->elems[idx].ocupado == 0 && idx_ocupado == -1){
       idx_ocupado = (int)idx;
     }
+    
   }
+  printf("El valor de idx_ocupado es: %i\n\n",idx_ocupado);
   if(tabla->elems[idx].dato != NULL){//encontró un dato idéntico, sobreescribir
     tabla->destr(tabla->elems[idx].dato);
     tabla->elems[idx].dato = tabla->copia(dato);
@@ -174,9 +176,12 @@ void tablahash_redimensionar(TablaHash tabla){
   tabla->copia = copydummy;
 
   for (int i = 0; i < vieja_capacidad;i++){
-    if (vieja_tabla[i].dato != NULL){
+    if (vieja_tabla[i].dato != NULL && vieja_tabla[i].ocupado == 0){
+      tabla->destr(vieja_tabla[i].dato);
+    }
+    else if (vieja_tabla[i].dato != NULL && vieja_tabla[i].ocupado == 1){
       tablahash_insertar(tabla,vieja_tabla[i].dato);
-      }
+    }
   }
 
   tabla->copia = buenaCopia;
